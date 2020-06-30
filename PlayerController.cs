@@ -1,9 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     public GameObject planet;
     public GameObject playerPlaceholder;
+
+    private int planetsMapped = 0;
+    public Text planetsMappedText;
 
     public float speed = 4;
     public float jumpHeight = 1.2f;
@@ -26,6 +30,12 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+    }
+
+    public void MapPlanet()
+    {
+        planetsMapped++;
+        planetsMappedText.text = "Planets Mapped: " + planetsMapped + "/7";
     }
 
     private void Update()
@@ -107,6 +117,15 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(gravDirection * gravity);
             playerPlaceholder.GetComponent<PlayerPlaceholder>().NewPlanet(planet);
             speed = 4;
+
+            if (!other.GetComponent<PlanetScript>().discovered)
+            {
+                other.GetComponent<PlanetScript>().discovered = true;
+                planetsMapped++;
+                planetsMappedText.text = "Planets mapped: " + planetsMapped + "/7";
+
+                Debug.Log(other.gameObject.name + " discovered.");
+            }
         }
     }
 
