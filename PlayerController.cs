@@ -23,9 +23,6 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rb;
 
-    float roll;
-    float pitch;
-
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -40,10 +37,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        roll = Input.GetAxisRaw("Horizontal");
-        pitch = Input.GetAxisRaw("Vertical");
-        transform.Rotate(Vector3.up * roll * 50f * Time.deltaTime, Space.Self);
-        transform.Rotate(Vector3.right * -pitch * 50f * Time.deltaTime, Space.Self);
+        transform.Rotate(Vector3.up * Input.GetAxisRaw("Horizontal") * 60f * Time.deltaTime, Space.Self);
+        transform.Rotate(Vector3.right * -Input.GetAxisRaw("Vertical") * 60f * Time.deltaTime, Space.Self);
 
         if (Input.GetKey("space"))
         {
