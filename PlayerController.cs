@@ -21,12 +21,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Camera cam;
 
+    [SerializeField]
+    float mouseSensitivity = 100f;
+
     private Rigidbody rb;
 
     void Start()
     {
+        Cursor.visible = false;
         rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true;
+        rb.freezeRotation = true; // To prevent collision with other object from adding force to the ship.
     }
 
     public void MapPlanet()
@@ -37,8 +41,16 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        transform.Rotate(Vector3.up * Input.GetAxisRaw("Horizontal") * 60f * Time.deltaTime, Space.Self);
-        transform.Rotate(Vector3.right * -Input.GetAxisRaw("Vertical") * 60f * Time.deltaTime, Space.Self);
+        if (Input.GetMouseButton(1))
+        {
+            transform.Rotate(0, Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivity, 0);
+            transform.Rotate(-Input.GetAxis("Mouse Y") * Time.deltaTime * mouseSensitivity, 0, 0);
+        }
+        else
+        {
+            transform.Rotate(Vector3.up * Input.GetAxisRaw("Horizontal") * 45f * Time.deltaTime, Space.Self);
+            transform.Rotate(Vector3.right * -Input.GetAxisRaw("Vertical") * 45f * Time.deltaTime, Space.Self);
+        }
 
         if (Input.GetKey("space"))
         {
@@ -46,12 +58,13 @@ public class PlayerController : MonoBehaviour
         }
 
         // On-planet movement considering gravity.
+        /*
         if (planet != null)
         {
             // Movement
-            float z = Input.GetAxis("Vertical") * Time.deltaTime * speed;
+            //float z = Input.GetAxis("Vertical") * Time.deltaTime * speed;
 
-            transform.Translate(0, 0, z);
+            //transform.Translate(0, 0, z);
 
             // Local rotation
             if (Input.GetKey(KeyCode.E))
@@ -95,12 +108,22 @@ public class PlayerController : MonoBehaviour
             Quaternion toRotation = Quaternion.FromToRotation(transform.up, groundNormal) * transform.rotation;
             transform.rotation = toRotation;
         }
+        */
 
+    }
+
+    private void FixedUpdate()
+    {
+        if (Input.GetKey(KeyCode.Tab))
+        {
+            
+        }
     }
 
     // Change Planet
     private void OnTriggerEnter(Collider other)
     {
+        /*
         if (planet == null || other.transform != planet.transform)
         {
             Debug.Log("Entering planet");
@@ -122,15 +145,18 @@ public class PlayerController : MonoBehaviour
                 Debug.Log(other.gameObject.name + " discovered.");
             }
         }
+        */
     }
 
     private void OnTriggerExit(Collider other)
     {
+        /*
         Debug.Log("Left planet");
         planet = null;
         speed = 8;
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
+        */
     }
 
 }
