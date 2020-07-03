@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+ * This class is responsible for the movement of the player/ship.
+ */
 public class PlayerController : MonoBehaviour
 {
     public GameObject planet;

@@ -2,5 +2,5 @@
 
 public class PlanetScript : MonoBehaviour
 {
-    public bool discovered = false;
+    public float speed = 1f;
 }

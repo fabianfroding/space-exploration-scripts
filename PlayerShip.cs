@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/*
+ * This class is responsible for behaviour in the player/ship that is unrelated to the movement of the ship.
+ */
 public class PlayerShip : MonoBehaviour
 {
     [SerializeField]
@@ -10,7 +13,9 @@ public class PlayerShip : MonoBehaviour
 
     [SerializeField]
     private TrailRenderer trailRenderer;
-    
+
+    private bool boost = false;
+
     private void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.Space))
@@ -22,11 +27,12 @@ public class PlayerShip : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                if (!boostSound.isPlaying)
+                if (!boost)
                 {
+                    boost = true;
                     boostSound.Play();
                     trailRenderer.time = 0.5f / 3f;
-                    Invoke("ResetTrailRenderer", boostSound.clip.length);
+                    Invoke("ResetBoost", 2.33f); // 2~ sec is the same duration as the speed bost in PlayerController.
                 }
             }
         }
@@ -36,8 +42,9 @@ public class PlayerShip : MonoBehaviour
         }
     }
 
-    private void ResetTrailRenderer()
+    private void ResetBoost()
     {
         trailRenderer.time = 0.5f;
+        boost = false;
     }
 }
