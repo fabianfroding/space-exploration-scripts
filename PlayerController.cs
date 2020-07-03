@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -9,7 +10,7 @@ public class PlayerController : MonoBehaviour
     private int planetsMapped = 0;
     public Text planetsMappedText;
 
-    public float speed = 4;
+    public float speed = 12;
     public float jumpHeight = 1.2f;
 
     float gravity = 100;
@@ -26,9 +27,11 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rb;
 
+    private bool boost = false;
+    private float boostSpeed = 1;
+
     void Start()
     {
-        Cursor.visible = false;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true; // To prevent collision with other object from adding force to the ship.
     }
@@ -54,7 +57,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey("space"))
         {
-            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+            transform.Translate(Vector3.forward * speed * boostSpeed * Time.deltaTime);
         }
 
         // On-planet movement considering gravity.
@@ -114,10 +117,30 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.Tab))
+        if (!boost && Input.GetKey(KeyCode.Space) && Input.GetKeyDown(KeyCode.Q))
         {
-            
+            boostSpeed = 3;
+            StartCoroutine("FadeBoostSpeed");
         }
+    }
+
+    IEnumerator FadeBoostSpeed()
+    {
+        boost = true;
+        while (boost)
+        {
+            if (boostSpeed > 1)
+            {
+                boostSpeed -= 0.1f;
+                yield return new WaitForSeconds(0.1f);
+            }
+            else
+            {
+                boostSpeed = 1;
+                boost = false;
+            }
+        }
+        boost = false;
     }
 
     // Change Planet
