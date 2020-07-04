@@ -3,4 +3,6 @@
 public class PlanetScript : MonoBehaviour
 {
     public float speed = 1f;
+
+    public bool discovered = false;
 }

@@ -32,7 +32,7 @@ public class PlayerShip : MonoBehaviour
                     boost = true;
                     boostSound.Play();
                     trailRenderer.time = 0.5f / 3f;
-                    Invoke("ResetBoost", 2.33f); // 2~ sec is the same duration as the speed bost in PlayerController.
+                    Invoke("ResetBoost", 2.33f); // 2~ sec is the same duration as the speed boost in PlayerController.
                 }
             }
         }

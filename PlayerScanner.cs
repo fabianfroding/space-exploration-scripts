@@ -13,19 +13,54 @@ public class PlayerScanner : MonoBehaviour
 
     void FixedUpdate()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, range))
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, range))
         {
-            if (hit.transform.CompareTag("Planet"))
+            if (hit.transform != null)
             {
-                scanTextPlanet.text = hit.transform.name;
-                scanTextDistance.text = "Distance: " + (int)Vector3.Distance(hit.transform.position, transform.position);
+                if (hit.transform.CompareTag("Planet"))
+                {
+                    float dist = Vector3.Distance(hit.transform.position, transform.position);
+                    bool planetDiscovered = hit.transform.gameObject.GetComponent<PlanetScript>().discovered;
+
+                    // TODO: Consider planet scale/sphere radius
+                    if (dist < 50)
+                    {
+                        scanTextDistance.text = "Distance: -";
+                        if (!planetDiscovered)
+                        {
+                            hit.transform.gameObject.GetComponent<PlanetScript>().discovered = true;
+                        }
+                    }
+                    else
+                    {
+                        scanTextDistance.text = "Distance: " + dist.ToString("F2");
+                    }
+
+                    if (planetDiscovered)
+                    {
+                        scanTextPlanet.text = hit.transform.name;
+                    }
+                    else
+                    {
+                        scanTextPlanet.text = "Unknown Planet";
+                    }
+                }
+                else
+                {
+                    scanTextPlanet.text = "";
+                    scanTextDistance.text = "";
+                }
             }
             else
             {
                 scanTextPlanet.text = "";
                 scanTextDistance.text = "";
             }
+        }
+        else
+        {
+            scanTextPlanet.text = "";
+            scanTextDistance.text = "";
         }
     }
 }
