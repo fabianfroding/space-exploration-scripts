@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // On-planet movement considering gravity.
-        /*
+        
         if (planet != null)
         {
             // Movement
@@ -114,7 +114,7 @@ public class PlayerController : MonoBehaviour
             Quaternion toRotation = Quaternion.FromToRotation(transform.up, groundNormal) * transform.rotation;
             transform.rotation = toRotation;
         }
-        */
+        
 
     }
 
@@ -149,7 +149,7 @@ public class PlayerController : MonoBehaviour
     // Change Planet
     private void OnTriggerEnter(Collider other)
     {
-        /*
+        
         if (planet == null || other.transform != planet.transform)
         {
             Debug.Log("Entering planet");
@@ -171,18 +171,18 @@ public class PlayerController : MonoBehaviour
                 Debug.Log(other.gameObject.name + " discovered.");
             }
         }
-        */
+        
     }
 
     private void OnTriggerExit(Collider other)
     {
-        /*
+        
         Debug.Log("Left planet");
         planet = null;
         speed = 8;
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        */
+        
     }
 
 }
