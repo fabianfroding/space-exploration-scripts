@@ -12,13 +12,28 @@ public class MainMenuScript : MonoBehaviour
 
     private void Start()
     {
-        progressScoreText.text = "Progress: " + (PlayerPrefs.GetInt("PlanetsDiscovered") / 8.0) * 100.0 + "%";
-        planetsDiscoveredText.text = "Planets Discovered: " + PlayerPrefs.GetInt("PlanetsDiscovered") + "/8";
+        if (PlayerPrefs.HasKey("PlanetsDiscovered"))
+        {
+            progressScoreText.text = "Progress: " + (PlayerPrefs.GetInt("PlanetsDiscovered") / 8.0) * 100.0 + "%";
+            planetsDiscoveredText.text = "Planets Discovered: " + PlayerPrefs.GetInt("PlanetsDiscovered") + "/8";
+        }
+        else
+        {
+            progressScoreText.text = "Progress: 0%";
+            planetsDiscoveredText.text = "Planets Discovered: 0/8";
+        }
     }
 
     public void BTNPlay_Click()
     {
         SceneManager.LoadScene("Level0");
+    }
+
+    public void BTNResetGame_Click()
+    {
+        progressScoreText.text = "Progress: 0%";
+        planetsDiscoveredText.text = "Planets Discovered: 0/8";
+        PlayerPrefs.DeleteAll();
     }
 
     public void BTNQuit_Click()
