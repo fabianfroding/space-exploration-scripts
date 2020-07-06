@@ -6,7 +6,7 @@ public class OrbitScript : MonoBehaviour
     private GameObject orbitObject;
 
     [SerializeField]
-    private float orbitSpeed = 4f;
+    private float orbitSpeed = 0.01f; // In case forgetting to set individual speed in scene.
 
     private void Update()
     {

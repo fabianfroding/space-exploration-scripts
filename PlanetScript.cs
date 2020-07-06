@@ -2,7 +2,5 @@
 
 public class PlanetScript : MonoBehaviour
 {
-    public float speed = 1f;
-
-    public bool discovered = false;
+    public bool discovered = false; // Need to save this in PlayerPrefs.
 }
