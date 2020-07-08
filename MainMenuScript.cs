@@ -24,16 +24,17 @@ public class MainMenuScript : MonoBehaviour
         }
     }
 
-    public void BTNPlay_Click()
-    {
-        SceneManager.LoadScene("Level0");
-    }
-
-    public void BTNResetGame_Click()
+    public void BTNNewGame_Click()
     {
         progressScoreText.text = "Progress: 0%";
         planetsDiscoveredText.text = "Planets Discovered: 0/8";
         PlayerPrefs.DeleteAll();
+        SceneManager.LoadScene("Level0");
+    }
+
+    public void BTNLoad_Click()
+    {
+        SceneManager.LoadScene("Level0");
     }
 
     public void BTNQuit_Click()

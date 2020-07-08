@@ -53,7 +53,6 @@ public class PlayerPrefsManager : MonoBehaviour
             x = PlayerPrefs.GetFloat("PlayerRotationX");
             y = PlayerPrefs.GetFloat("PlayerRotationY");
             z = PlayerPrefs.GetFloat("PlayerRotationZ");
-            Debug.Log("Load PlayerRotationX: " + x);
             player.transform.rotation = Quaternion.Euler(x, y, z);
         }
     }
