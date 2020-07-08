@@ -42,6 +42,11 @@ public class PlayerPrefsManager : MonoBehaviour
         }
     }
 
+    public static void StoreCameraFOV()
+    {
+        PlayerPrefs.SetFloat("CameraFOV", Camera.main.fieldOfView);
+    }
+
     public static void LoadPlayerLocation(GameObject player)
     {
         if (PlayerPrefsManager.HasPlayerLocationKeys())
@@ -91,6 +96,12 @@ public class PlayerPrefsManager : MonoBehaviour
                 planets[i].transform.rotation = Quaternion.Euler(x,y,z);
             }
         }
+    }
+
+    public static void LoadCameraFOV()
+    {
+        float fov = PlayerPrefs.GetFloat("CameraFOV");
+        Camera.main.fieldOfView = fov;
     }
 
     private static bool HasPlayerLocationKeys()
