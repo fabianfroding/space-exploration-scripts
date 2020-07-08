@@ -30,7 +30,6 @@ public class PlayerScanner : MonoBehaviour
                         {
                             hit.transform.gameObject.GetComponent<PlanetScript>().discovered = true;
                             PlayerPrefs.SetInt("PlanetsDiscovered", PlayerPrefs.GetInt("PlanetsDiscovered") + 1);
-                            Debug.Log("PlanetsDiscovered: " + PlayerPrefs.GetInt("PlanetsDiscovered"));
                         }
                     }
                     else

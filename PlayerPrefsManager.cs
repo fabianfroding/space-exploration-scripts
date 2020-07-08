@@ -5,12 +5,12 @@ public class PlayerPrefsManager : MonoBehaviour
 {
     public static void StorePlayerLocation(GameObject player)
     {
-        PlayerPrefs.SetFloat("PlayerPositionX", player.transform.position.x);
-        PlayerPrefs.SetFloat("PlayerPositionY", player.transform.position.y);
-        PlayerPrefs.SetFloat("PlayerPositionZ", player.transform.position.z);
-        PlayerPrefs.SetFloat("PlayerRotationX", player.transform.rotation.eulerAngles.x);
-        PlayerPrefs.SetFloat("PlayerRotationY", player.transform.rotation.eulerAngles.y);
-        PlayerPrefs.SetFloat("PlayerRotationZ", player.transform.rotation.eulerAngles.z);
+        PlayerPrefs.SetFloat("PlayerPosX", player.transform.position.x);
+        PlayerPrefs.SetFloat("PlayerPosY", player.transform.position.y);
+        PlayerPrefs.SetFloat("PlayerPosZ", player.transform.position.z);
+        PlayerPrefs.SetFloat("PlayerRotX", player.transform.rotation.eulerAngles.x);
+        PlayerPrefs.SetFloat("PlayerRotY", player.transform.rotation.eulerAngles.y);
+        PlayerPrefs.SetFloat("PlayerRotZ", player.transform.rotation.eulerAngles.z);
     }
 
     // Stores wether a planet is discovered or not, so that it doesn't appear as "Unknown Planet" if the game is loaded.
@@ -33,12 +33,12 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         for (int i = 0; i < planets.Count; i++)
         {
-            PlayerPrefs.SetFloat(planets[i].name + "PositionX", planets[i].transform.position.x);
-            PlayerPrefs.SetFloat(planets[i].name + "PositionY", planets[i].transform.position.y);
-            PlayerPrefs.SetFloat(planets[i].name + "PositionZ", planets[i].transform.position.z);
-            PlayerPrefs.SetFloat(planets[i].name + "RotationX", planets[i].transform.rotation.eulerAngles.x);
-            PlayerPrefs.SetFloat(planets[i].name + "RotationY", planets[i].transform.rotation.eulerAngles.y);
-            PlayerPrefs.SetFloat(planets[i].name + "RotationZ", planets[i].transform.rotation.eulerAngles.z);
+            PlayerPrefs.SetFloat(planets[i].name + "PosX", planets[i].transform.position.x);
+            PlayerPrefs.SetFloat(planets[i].name + "PosY", planets[i].transform.position.y);
+            PlayerPrefs.SetFloat(planets[i].name + "PosZ", planets[i].transform.position.z);
+            PlayerPrefs.SetFloat(planets[i].name + "RotX", planets[i].transform.rotation.eulerAngles.x);
+            PlayerPrefs.SetFloat(planets[i].name + "RotY", planets[i].transform.rotation.eulerAngles.y);
+            PlayerPrefs.SetFloat(planets[i].name + "RotZ", planets[i].transform.rotation.eulerAngles.z);
         }
     }
 
@@ -51,13 +51,13 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         if (PlayerPrefsManager.HasPlayerLocationKeys())
         {
-            float x = PlayerPrefs.GetFloat("PlayerPositionX");
-            float y = PlayerPrefs.GetFloat("PlayerPositionY");
-            float z = PlayerPrefs.GetFloat("PlayerPositionZ");
+            float x = PlayerPrefs.GetFloat("PlayerPosX");
+            float y = PlayerPrefs.GetFloat("PlayerPosY");
+            float z = PlayerPrefs.GetFloat("PlayerPosZ");
             player.transform.position = new Vector3(x, y, z);
-            x = PlayerPrefs.GetFloat("PlayerRotationX");
-            y = PlayerPrefs.GetFloat("PlayerRotationY");
-            z = PlayerPrefs.GetFloat("PlayerRotationZ");
+            x = PlayerPrefs.GetFloat("PlayerRotX");
+            y = PlayerPrefs.GetFloat("PlayerRotY");
+            z = PlayerPrefs.GetFloat("PlayerRotZ");
             player.transform.rotation = Quaternion.Euler(x, y, z);
         }
     }
@@ -86,13 +86,13 @@ public class PlayerPrefsManager : MonoBehaviour
         {
             for (int i = 0; i < planets.Count; i++)
             {
-                float x = PlayerPrefs.GetFloat(planets[i].name + "PositionX");
-                float y = PlayerPrefs.GetFloat(planets[i].name + "PositionY");
-                float z = PlayerPrefs.GetFloat(planets[i].name + "PositionZ");
+                float x = PlayerPrefs.GetFloat(planets[i].name + "PosX");
+                float y = PlayerPrefs.GetFloat(planets[i].name + "PosY");
+                float z = PlayerPrefs.GetFloat(planets[i].name + "PosZ");
                 planets[i].transform.position = new Vector3(x, y, z);
-                x = PlayerPrefs.GetFloat(planets[i].name + "RotationX");
-                y = PlayerPrefs.GetFloat(planets[i].name + "RotationY");
-                z = PlayerPrefs.GetFloat(planets[i].name + "RotationZ");
+                x = PlayerPrefs.GetFloat(planets[i].name + "RotX");
+                y = PlayerPrefs.GetFloat(planets[i].name + "RotY");
+                z = PlayerPrefs.GetFloat(planets[i].name + "RotZ");
                 planets[i].transform.rotation = Quaternion.Euler(x,y,z);
             }
         }
@@ -107,12 +107,12 @@ public class PlayerPrefsManager : MonoBehaviour
     private static bool HasPlayerLocationKeys()
     {
         if (
-            PlayerPrefs.HasKey("PlayerPositionX") ||
-            PlayerPrefs.HasKey("PlayerPositionY") ||
-            PlayerPrefs.HasKey("PlayerPositionZ") ||
-            PlayerPrefs.HasKey("PlayerRotationX") ||
-            PlayerPrefs.HasKey("PlayerRotationY") ||
-            PlayerPrefs.HasKey("PlayerRotationZ")
+            PlayerPrefs.HasKey("PlayerPosX") ||
+            PlayerPrefs.HasKey("PlayerPosY") ||
+            PlayerPrefs.HasKey("PlayerPosZ") ||
+            PlayerPrefs.HasKey("PlayerRotX") ||
+            PlayerPrefs.HasKey("PlayerRotY") ||
+            PlayerPrefs.HasKey("PlayerRotZ")
             )
         {
             return true;
@@ -138,15 +138,15 @@ public class PlayerPrefsManager : MonoBehaviour
         for (int i = 0; i < planets.Count; i++)
         {
             if (
-                !PlayerPrefs.HasKey(planets[i].name + "LocationX") ||
-                !PlayerPrefs.HasKey(planets[i].name + "LocationY") ||
-                !PlayerPrefs.HasKey(planets[i].name + "LocationZ") ||
-                !PlayerPrefs.HasKey(planets[i].name + "RotationX") ||
-                !PlayerPrefs.HasKey(planets[i].name + "RotationY") ||
-                !PlayerPrefs.HasKey(planets[i].name + "RotationZ")
+                !PlayerPrefs.HasKey(planets[i].name + "PosX") ||
+                !PlayerPrefs.HasKey(planets[i].name + "PosY") ||
+                !PlayerPrefs.HasKey(planets[i].name + "PosZ") ||
+                !PlayerPrefs.HasKey(planets[i].name + "RotX") ||
+                !PlayerPrefs.HasKey(planets[i].name + "RotY") ||
+                !PlayerPrefs.HasKey(planets[i].name + "RotZ")
                 )
             {
-                Debug.Log("PlayerPref Key \"" + planets[i].name + "Location/RotationXYZ\" was not found.");
+                Debug.Log("PlayerPref Key \"" + planets[i].name + "Pos/RotXYZ\" was not found.");
                 return false;
             }
         }
