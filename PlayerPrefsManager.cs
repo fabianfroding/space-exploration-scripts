@@ -8,12 +8,12 @@ public class PlayerPrefsManager : MonoBehaviour
         PlayerPrefs.SetFloat("PlayerPositionX", player.transform.position.x);
         PlayerPrefs.SetFloat("PlayerPositionY", player.transform.position.y);
         PlayerPrefs.SetFloat("PlayerPositionZ", player.transform.position.z);
-        PlayerPrefs.SetFloat("PlayerRotationX", player.transform.rotation.x);
-        PlayerPrefs.SetFloat("PlayerRotationY", player.transform.rotation.y);
-        PlayerPrefs.SetFloat("PlayerRotationZ", player.transform.rotation.z);
+        PlayerPrefs.SetFloat("PlayerRotationX", player.transform.rotation.eulerAngles.x);
+        PlayerPrefs.SetFloat("PlayerRotationY", player.transform.rotation.eulerAngles.y);
+        PlayerPrefs.SetFloat("PlayerRotationZ", player.transform.rotation.eulerAngles.z);
     }
 
-    // Stores wether a planet is discovered or not, so that it doesn't appear as "Unknown Planet" if the game is continued.
+    // Stores wether a planet is discovered or not, so that it doesn't appear as "Unknown Planet" if the game is loaded.
     public static void StorePlanetStatuses(List<GameObject> planets)
     {
         for (int i = 0; i < planets.Count; i++)
@@ -36,9 +36,9 @@ public class PlayerPrefsManager : MonoBehaviour
             PlayerPrefs.SetFloat(planets[i].name + "PositionX", planets[i].transform.position.x);
             PlayerPrefs.SetFloat(planets[i].name + "PositionY", planets[i].transform.position.y);
             PlayerPrefs.SetFloat(planets[i].name + "PositionZ", planets[i].transform.position.z);
-            PlayerPrefs.SetFloat(planets[i].name + "RotationX", planets[i].transform.rotation.x);
-            PlayerPrefs.SetFloat(planets[i].name + "RotationY", planets[i].transform.rotation.y);
-            PlayerPrefs.SetFloat(planets[i].name + "RotationZ", planets[i].transform.rotation.z);
+            PlayerPrefs.SetFloat(planets[i].name + "RotationX", planets[i].transform.rotation.eulerAngles.x);
+            PlayerPrefs.SetFloat(planets[i].name + "RotationY", planets[i].transform.rotation.eulerAngles.y);
+            PlayerPrefs.SetFloat(planets[i].name + "RotationZ", planets[i].transform.rotation.eulerAngles.z);
         }
     }
 
@@ -53,6 +53,7 @@ public class PlayerPrefsManager : MonoBehaviour
             x = PlayerPrefs.GetFloat("PlayerRotationX");
             y = PlayerPrefs.GetFloat("PlayerRotationY");
             z = PlayerPrefs.GetFloat("PlayerRotationZ");
+            Debug.Log("Load PlayerRotationX: " + x);
             player.transform.rotation = Quaternion.Euler(x, y, z);
         }
     }
