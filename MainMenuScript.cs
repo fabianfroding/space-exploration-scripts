@@ -10,24 +10,26 @@ public class MainMenuScript : MonoBehaviour
     [SerializeField]
     private Text planetsDiscoveredText;
 
+    private int numPlanets = 8;
+
     private void Start()
     {
         if (PlayerPrefs.HasKey("PlanetsDiscovered"))
         {
-            progressScoreText.text = "Progress: " + (PlayerPrefs.GetInt("PlanetsDiscovered") / 8.0) * 100.0 + "%";
-            planetsDiscoveredText.text = "Planets Discovered: " + PlayerPrefs.GetInt("PlanetsDiscovered") + "/8";
+            progressScoreText.text = "Progress: " + (PlayerPrefs.GetInt("PlanetsDiscovered") / (float)numPlanets) * 100.0 + "%";
+            planetsDiscoveredText.text = "Planets Discovered: " + PlayerPrefs.GetInt("PlanetsDiscovered") + "/" + numPlanets;
         }
         else
         {
             progressScoreText.text = "Progress: 0%";
-            planetsDiscoveredText.text = "Planets Discovered: 0/8";
+            planetsDiscoveredText.text = "Planets Discovered: 0/" + numPlanets;
         }
     }
 
     public void BTNNewGame_Click()
     {
         progressScoreText.text = "Progress: 0%";
-        planetsDiscoveredText.text = "Planets Discovered: 0/8";
+        planetsDiscoveredText.text = "Planets Discovered: 0/" + numPlanets;
         PlayerPrefs.DeleteAll();
         SceneManager.LoadScene("Level0");
     }

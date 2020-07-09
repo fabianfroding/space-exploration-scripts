@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     private GameObject player;
 
     [SerializeField]
-    private List<GameObject> planets;
+    public List<GameObject> planets;
 
     private void Start()
     {

@@ -9,7 +9,17 @@ public class PlayerScanner : MonoBehaviour
     [SerializeField]
     private Text scanTextDistance;
 
+    [SerializeField]
+    private Text planetsDiscoveredText;
+
     private float range = 2000f;
+
+    private int numPlanets = 8;
+
+    private void Start()
+    {
+        planetsDiscoveredText.text = "Planets Discovered: " + PlayerPrefs.GetInt("PlanetsDiscovered").ToString();
+    }
 
     void FixedUpdate()
     {
@@ -30,6 +40,7 @@ public class PlayerScanner : MonoBehaviour
                         {
                             hit.transform.gameObject.GetComponent<PlanetScript>().discovered = true;
                             PlayerPrefs.SetInt("PlanetsDiscovered", PlayerPrefs.GetInt("PlanetsDiscovered") + 1);
+                            planetsDiscoveredText.text = "Planets Discovered: " + PlayerPrefs.GetInt("PlanetsDiscovered").ToString() + "/" + numPlanets;
                         }
                     }
                     else
