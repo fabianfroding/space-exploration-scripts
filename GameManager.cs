@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
         PlayerPrefsManager.LoadPlanetsStatuses(planets);
         PlayerPrefsManager.LoadPlanetsLocations(planets);
         PlayerPrefsManager.LoadCameraFOV();
+        Cursor.visible = false;
     }
 
     private void FixedUpdate()
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
             PlayerPrefsManager.StorePlanetStatuses(planets);
             PlayerPrefsManager.StorePlanetLocations(planets);
             PlayerPrefsManager.StoreCameraFOV();
+            Cursor.visible = true;
             SceneManager.LoadScene("MainMenu");
         }
     }
