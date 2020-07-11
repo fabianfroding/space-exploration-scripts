@@ -104,16 +104,6 @@ public class PlayerPrefsManager : MonoBehaviour
         Camera.main.fieldOfView = fov;
     }
 
-    public static void StoreMusicVol(float vol)
-    {
-        PlayerPrefs.SetFloat("MusicVol", vol);
-    }
-
-    public static void LoadMusicVol()
-    {
-        PlayerPrefs.GetFloat("MusicVol");
-    }
-
     private static bool HasPlayerLocationKeys()
     {
         if (
