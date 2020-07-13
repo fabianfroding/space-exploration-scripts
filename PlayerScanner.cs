@@ -33,7 +33,7 @@ public class PlayerScanner : MonoBehaviour
                     bool planetDiscovered = hit.transform.gameObject.GetComponent<PlanetScript>().discovered;
 
                     // TODO: Consider planet scale/sphere radius
-                    if (dist < 50)
+                    if (dist < hit.transform.localScale.x + 25)
                     {
                         scanTextDistance.text = "Distance: -";
                         if (!planetDiscovered)
