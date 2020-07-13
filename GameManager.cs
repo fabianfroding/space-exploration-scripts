@@ -16,6 +16,12 @@ public class GameManager : MonoBehaviour
         PlayerPrefsManager.LoadPlanetsStatuses(planets);
         PlayerPrefsManager.LoadPlanetsLocations(planets);
         PlayerPrefsManager.LoadCameraFOV();
+
+        if (!PlayerPrefs.HasKey("Difficulty"))
+        {
+            PlayerPrefs.SetString("Difficulty", "Easy");
+        }
+
         Cursor.visible = false;
     }
 
