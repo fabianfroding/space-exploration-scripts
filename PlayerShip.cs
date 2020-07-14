@@ -16,6 +16,34 @@ public class PlayerShip : MonoBehaviour
 
     private bool boost = false;
 
+    private Vector3 respawnPos = new Vector3(235, 14, -750);
+    private Vector3 respawnRot = new Vector3(5, -17.5f, 0);
+
+
+    public void DestroySelf()
+    {
+        // Disable player
+        GetComponent<MeshRenderer>().enabled = false; // TODO: NOT WORKING
+        GetComponent<PlayerController>().enabled = false;
+
+
+        // Play explosion SFX
+
+        // Call respawn
+        Invoke("Respawn", 3.5f);
+    }
+
+    private void Respawn()
+    {
+        // Move player to respawn loc.
+        transform.position = respawnPos;
+        transform.rotation = Quaternion.Euler(respawnRot);
+
+        // Enable player
+        GetComponent<MeshRenderer>().enabled = true;
+        GetComponent<PlayerController>().enabled = true;
+    }
+
     private void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.Space))

@@ -10,9 +10,6 @@ public class PlayerController : MonoBehaviour
     public GameObject planet;
     public GameObject playerPlaceholder;
 
-    private int planetsMapped = 0;
-    public Text planetsMappedText;
-
     public float speed = 12;
     public float jumpHeight = 1.2f;
 
@@ -37,12 +34,6 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true; // To prevent collision with other object from adding force to the ship.
-    }
-
-    public void MapPlanet()
-    {
-        planetsMapped++;
-        planetsMappedText.text = "Planets Mapped: " + planetsMapped + "/7";
     }
 
     private void Update()
@@ -146,43 +137,35 @@ public class PlayerController : MonoBehaviour
         boost = false;
     }
 
-    // Change Planet
     private void OnTriggerEnter(Collider other)
     {
-        
-        if (planet == null || other.transform != planet.transform)
+        if (other.CompareTag("Planet"))
         {
-            Debug.Log("Entering planet");
-            planet = other.transform.gameObject;
-            Vector3 gravDirection = (transform.position - planet.transform.position).normalized;
-            Quaternion toRotation = Quaternion.FromToRotation(transform.up, gravDirection) * transform.rotation;
-            transform.rotation = toRotation;
-            rb.velocity = Vector3.zero;
-            rb.AddForce(gravDirection * gravity);
-            playerPlaceholder.GetComponent<PlayerPlaceholder>().NewPlanet(planet);
-            speed = 4;
-
-            if (!other.GetComponent<PlanetScript>().discovered)
+            if (planet == null || other.transform != planet.transform)
             {
-                other.GetComponent<PlanetScript>().discovered = true;
-                planetsMapped++;
-                planetsMappedText.text = "Planets mapped: " + planetsMapped + "/7";
-
-                Debug.Log(other.gameObject.name + " discovered.");
+                Debug.Log("Entering planet");
+                planet = other.transform.gameObject;
+                Vector3 gravDirection = (transform.position - planet.transform.position).normalized;
+                Quaternion toRotation = Quaternion.FromToRotation(transform.up, gravDirection) * transform.rotation;
+                transform.rotation = toRotation;
+                rb.velocity = Vector3.zero;
+                rb.AddForce(gravDirection * gravity);
+                playerPlaceholder.GetComponent<PlayerPlaceholder>().NewPlanet(planet);
+                speed = 4;
             }
         }
-        
     }
 
     private void OnTriggerExit(Collider other)
     {
-        
-        Debug.Log("Left planet");
-        planet = null;
-        speed = 8;
-        rb.velocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
-        
+        if (other.CompareTag("Planet"))
+        {
+            Debug.Log("Left planet");
+            planet = null;
+            speed = 8;
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
     }
 
 }
