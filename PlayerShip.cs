@@ -92,4 +92,12 @@ public class PlayerShip : MonoBehaviour
     {
         return !GetComponent<MeshRenderer>().enabled;
     }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Harmful") && !IsDead())
+        {
+            DestroySelf();
+        }
+    }
 }
