@@ -3,13 +3,13 @@
 public class OrbitScript : MonoBehaviour
 {
     [SerializeField]
-    private GameObject orbitObject;
+    public GameObject orbitObject;
+
+    [SerializeField]
+    public Vector3 orbitDirection = Vector3.up;
 
     [SerializeField]
     private float orbitSpeed = 0.01f; // In case forgetting to set individual speed in scene.
-
-    [SerializeField]
-    private Vector3 orbitDirection = Vector3.up;
 
     private void Update()
     {
