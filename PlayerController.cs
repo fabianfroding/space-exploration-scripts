@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 /*
  * This class is responsible for the movement of the player/ship.
@@ -38,83 +37,87 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButton(1))
+        if (!IsDead())
         {
-            transform.Rotate(0, Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivity, 0);
-            transform.Rotate(-Input.GetAxis("Mouse Y") * Time.deltaTime * mouseSensitivity, 0, 0);
-        }
-        else
-        {
-            transform.Rotate(Vector3.up * Input.GetAxisRaw("Horizontal") * 45f * Time.deltaTime, Space.Self);
-            transform.Rotate(Vector3.right * -Input.GetAxisRaw("Vertical") * 45f * Time.deltaTime, Space.Self);
-        }
-
-        if (Input.GetKey("space"))
-        {
-            transform.Translate(Vector3.forward * speed * boostSpeed * Time.deltaTime);
-        }
-
-        // On-planet movement considering gravity.
-        
-        if (planet != null)
-        {
-            // Movement
-            //float z = Input.GetAxis("Vertical") * Time.deltaTime * speed;
-
-            //transform.Translate(0, 0, z);
-
-            // Local rotation
-            if (Input.GetKey(KeyCode.E))
+            if (Input.GetMouseButton(1))
             {
-                transform.Rotate(0, 150 * Time.deltaTime, 0);
+                transform.Rotate(0, Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivity, 0);
+                transform.Rotate(-Input.GetAxis("Mouse Y") * Time.deltaTime * mouseSensitivity, 0, 0);
             }
-            if (Input.GetKey(KeyCode.Q))
+            else
             {
-                transform.Rotate(0, -150 * Time.deltaTime, 0);
+                transform.Rotate(Vector3.up * Input.GetAxisRaw("Horizontal") * 45f * Time.deltaTime, Space.Self);
+                transform.Rotate(Vector3.right * -Input.GetAxisRaw("Vertical") * 45f * Time.deltaTime, Space.Self);
             }
 
-            // Jump
-            if (Input.GetKey(KeyCode.Tab))
+            if (Input.GetKey("space"))
             {
-                rb.AddForce(transform.up * 40000 * jumpHeight * Time.deltaTime);
+                transform.Translate(Vector3.forward * speed * boostSpeed * Time.deltaTime);
             }
 
-            // Ground control
-            RaycastHit hit; // = new RaycastHit();
-            if (Physics.Raycast(transform.position, -transform.up, out hit, 10))
+            // On-planet movement considering gravity.
+
+            if (planet != null)
             {
-                distanceToGround = hit.distance;
-                groundNormal = hit.normal;
-                if (distanceToGround <= 0.1f)
+                // Movement
+                //float z = Input.GetAxis("Vertical") * Time.deltaTime * speed;
+
+                //transform.Translate(0, 0, z);
+
+                // Local rotation
+                if (Input.GetKey(KeyCode.E))
                 {
-                    onGround = true;
+                    transform.Rotate(0, 150 * Time.deltaTime, 0);
                 }
-                else
+                if (Input.GetKey(KeyCode.Q))
                 {
-                    onGround = false;
+                    transform.Rotate(0, -150 * Time.deltaTime, 0);
                 }
-            }
 
-            // Gravity and rotation
-            Vector3 gravDirection = (transform.position - planet.transform.position).normalized;
-            if (!onGround)
-            {
-                rb.AddForce(gravDirection * -gravity);
-            }
+                // Jump
+                if (Input.GetKey(KeyCode.Tab))
+                {
+                    rb.AddForce(transform.up * 40000 * jumpHeight * Time.deltaTime);
+                }
 
-            Quaternion toRotation = Quaternion.FromToRotation(transform.up, groundNormal) * transform.rotation;
-            transform.rotation = toRotation;
+                // Ground control
+                RaycastHit hit; // = new RaycastHit();
+                if (Physics.Raycast(transform.position, -transform.up, out hit, 10))
+                {
+                    distanceToGround = hit.distance;
+                    groundNormal = hit.normal;
+                    if (distanceToGround <= 0.1f)
+                    {
+                        onGround = true;
+                    }
+                    else
+                    {
+                        onGround = false;
+                    }
+                }
+
+                // Gravity and rotation
+                Vector3 gravDirection = (transform.position - planet.transform.position).normalized;
+                if (!onGround)
+                {
+                    rb.AddForce(gravDirection * -gravity);
+                }
+
+                Quaternion toRotation = Quaternion.FromToRotation(transform.up, groundNormal) * transform.rotation;
+                transform.rotation = toRotation;
+            }
         }
-        
-
     }
 
     private void FixedUpdate()
     {
-        if (!boost && Input.GetKey(KeyCode.Space) && Input.GetKeyDown(KeyCode.Q))
+        if (!IsDead())
         {
-            boostSpeed = 3;
-            StartCoroutine("FadeBoostSpeed");
+            if (!boost && Input.GetKey(KeyCode.Space) && Input.GetKeyDown(KeyCode.Q))
+            {
+                boostSpeed = 3;
+                StartCoroutine("FadeBoostSpeed");
+            }
         }
     }
 
@@ -139,33 +142,44 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Planet"))
+        if (!IsDead())
         {
-            if (planet == null || other.transform != planet.transform)
+            if (other.CompareTag("Planet"))
             {
-                Debug.Log("Entering planet");
-                planet = other.transform.gameObject;
-                Vector3 gravDirection = (transform.position - planet.transform.position).normalized;
-                Quaternion toRotation = Quaternion.FromToRotation(transform.up, gravDirection) * transform.rotation;
-                transform.rotation = toRotation;
-                rb.velocity = Vector3.zero;
-                rb.AddForce(gravDirection * gravity);
-                playerPlaceholder.GetComponent<PlayerPlaceholder>().NewPlanet(planet);
-                speed = 4;
+                if (planet == null || other.transform != planet.transform)
+                {
+                    Debug.Log("Entering planet");
+                    planet = other.transform.gameObject;
+                    Vector3 gravDirection = (transform.position - planet.transform.position).normalized;
+                    Quaternion toRotation = Quaternion.FromToRotation(transform.up, gravDirection) * transform.rotation;
+                    transform.rotation = toRotation;
+                    rb.velocity = Vector3.zero;
+                    rb.AddForce(gravDirection * gravity);
+                    playerPlaceholder.GetComponent<PlayerPlaceholder>().NewPlanet(planet);
+                    speed = 4;
+                }
             }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Planet"))
+        if (!IsDead())
         {
-            Debug.Log("Left planet");
-            planet = null;
-            speed = 8;
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
+            if (other.CompareTag("Planet"))
+            {
+                Debug.Log("Left planet");
+                planet = null;
+                speed = 8;
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+            }
         }
+    }
+
+    private bool IsDead()
+    {
+        return !GetComponent<MeshRenderer>().enabled;
     }
 
 }

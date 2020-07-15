@@ -14,6 +14,12 @@ public class PlayerShip : MonoBehaviour
     [SerializeField]
     private TrailRenderer trailRenderer;
 
+    [SerializeField]
+    private Canvas crossHairCanvas;
+
+    [SerializeField]
+    private GameObject playerExplosion;
+
     private bool boost = false;
 
     private Vector3 respawnPos = new Vector3(235, 14, -750);
@@ -25,9 +31,13 @@ public class PlayerShip : MonoBehaviour
         // Disable player
         GetComponent<MeshRenderer>().enabled = false; // TODO: NOT WORKING
         GetComponent<PlayerController>().enabled = false;
+        trailRenderer.enabled = false;
+        crossHairCanvas.enabled = false;
 
 
         // Play explosion SFX
+        GameObject tmp = Instantiate(playerExplosion, transform.position, transform.rotation);
+        Destroy(tmp, 2);
 
         // Call respawn
         Invoke("Respawn", 3.5f);
@@ -42,11 +52,13 @@ public class PlayerShip : MonoBehaviour
         // Enable player
         GetComponent<MeshRenderer>().enabled = true;
         GetComponent<PlayerController>().enabled = true;
+        trailRenderer.enabled = true;
+        crossHairCanvas.enabled = true;
     }
 
     private void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && !IsDead())
         {
             if (!engineSound.isPlaying)
             {
@@ -74,5 +86,10 @@ public class PlayerShip : MonoBehaviour
     {
         trailRenderer.time = 0.5f;
         boost = false;
+    }
+
+    private bool IsDead()
+    {
+        return !GetComponent<MeshRenderer>().enabled;
     }
 }
