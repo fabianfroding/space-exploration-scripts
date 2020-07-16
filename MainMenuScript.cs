@@ -10,6 +10,9 @@ public class MainMenuScript : MonoBehaviour
     [SerializeField]
     private Text planetsDiscoveredText;
 
+    [SerializeField]
+    private Dropdown difficultyDropdown;
+
     private int numPlanets = 8;
 
     private void Start()
@@ -31,11 +34,13 @@ public class MainMenuScript : MonoBehaviour
         progressScoreText.text = "Progress: 0%";
         planetsDiscoveredText.text = "Planets Discovered: 0/" + numPlanets;
         PlayerPrefs.DeleteAll();
+        PlayerPrefs.SetString("Difficulty", difficultyDropdown.options[difficultyDropdown.value].text);
         SceneManager.LoadScene("Level0");
     }
 
     public void BTNLoad_Click()
     {
+        PlayerPrefs.SetString("Difficulty", difficultyDropdown.options[difficultyDropdown.value].text);
         SceneManager.LoadScene("Level0");
     }
 
