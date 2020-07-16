@@ -20,21 +20,7 @@ public class OptionsController : MonoBehaviour
     {
         if (!PlayerPrefs.HasKey("Difficulty"))
         {
-            PlayerPrefs.SetString("Difficulty", difficultyDropdown.options[difficultyDropdown.value].text);
-        }
-        else
-        {
-            int loadedValue = 0;
-            if (PlayerPrefs.GetString("Difficulty") == "Normal")
-            {
-                loadedValue = 1;
-            }
-            else if (PlayerPrefs.GetString("Difficulty") == "Hard")
-            {
-                loadedValue = 2;
-            }
-            difficultyDropdown.options[difficultyDropdown.value] = difficultyDropdown.options[loadedValue];
-            difficultyDropdown.RefreshShownValue();
+            SetDifficulty(difficultyDropdown.options[difficultyDropdown.value].text);
         }
     }
 

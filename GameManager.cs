@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetString("Difficulty", "Easy");
         }
+        Debug.Log("Difficulty: " + PlayerPrefs.GetString("Difficulty"));
 
         Cursor.visible = false;
     }
