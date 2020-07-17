@@ -12,8 +12,9 @@ public class AgosScript : PlanetScript
         {
             additionalAsteroids[0].gameObject.SetActive(false);
         }
-        if (PlayerPrefs.GetString("Difficulty") == "Easy")
+        else if (PlayerPrefs.GetString("Difficulty") == "Easy")
         {
+            additionalAsteroids[0].gameObject.SetActive(false);
             additionalAsteroids[1].gameObject.SetActive(false);
         }
     }
