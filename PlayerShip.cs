@@ -54,6 +54,8 @@ public class PlayerShip : MonoBehaviour
         GetComponent<PlayerController>().enabled = true;
         trailRenderer.enabled = true;
         crossHairCanvas.enabled = true;
+
+        GetComponent<Rigidbody>().velocity = Vector3.zero; // Reset velocity from collision of harmful objects.
     }
 
     private void FixedUpdate()

@@ -30,13 +30,24 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            PlayerPrefsManager.StorePlayerLocation(player);
-            PlayerPrefsManager.StorePlanetStatuses(planets);
-            PlayerPrefsManager.StorePlanetLocations(planets);
-            PlayerPrefsManager.StoreCameraFOV();
+            StorePlayerData();
             Cursor.visible = true;
             SceneManager.LoadScene("MainMenu");
         }
     }
-    
+
+    private void OnApplicationQuit()
+    {
+        StorePlayerData();
+        Debug.Log("Application terminated.");
+    }
+
+    private void StorePlayerData()
+    {
+        PlayerPrefsManager.StorePlayerLocation(player);
+        PlayerPrefsManager.StorePlanetStatuses(planets);
+        PlayerPrefsManager.StorePlanetLocations(planets);
+        PlayerPrefsManager.StoreCameraFOV();
+    }
+
 }
