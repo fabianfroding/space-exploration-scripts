@@ -7,6 +7,9 @@ public class ObsidusScript : PlanetScript
     [SerializeField]
     private GameObject obsidianRockRef;
 
+    [SerializeField]
+    private AudioSource eruptSound;
+
     private float launchRocksCooldown = 20f;
     private int numRocks = 100;
     private float spawnDistance = 30f;
@@ -19,6 +22,7 @@ public class ObsidusScript : PlanetScript
     private void LaunchRocks()
     {
         Debug.Log("Launching obisidian rocks");
+        eruptSound.Play();
 
         for (int i = 0; i < numRocks; i++)
         {

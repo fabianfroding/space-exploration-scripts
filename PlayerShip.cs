@@ -6,6 +6,9 @@
 public class PlayerShip : MonoBehaviour
 {
     [SerializeField]
+    private GameObject beamRef;
+
+    [SerializeField]
     private AudioSource engineSound;
 
     [SerializeField]
@@ -21,6 +24,7 @@ public class PlayerShip : MonoBehaviour
     private GameObject playerExplosion;
 
     private bool boost = false;
+    private bool beamOnCD = false;
 
     private Vector3 respawnPos = new Vector3(235, 14, -750);
     private Vector3 respawnRot = new Vector3(5, -17.5f, 0);
@@ -84,10 +88,30 @@ public class PlayerShip : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0) && !IsDead() && !beamOnCD)
+        {
+            beamOnCD = true;
+            Debug.Log("Shoot beam!");
+
+            GameObject beam = Instantiate(beamRef);
+            beam.transform.position = transform.position + transform.forward;
+            beam.transform.forward = transform.forward; // Make beam point to where player is looking.
+
+            Invoke("ResetBeam", 0.1f);
+        }
+    }
+
     private void ResetBoost()
     {
         trailRenderer.time = 0.5f;
         boost = false;
+    }
+
+    private void ResetBeam()
+    {
+        beamOnCD = false;
     }
 
     private bool IsDead()
