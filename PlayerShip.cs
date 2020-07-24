@@ -96,6 +96,7 @@ public class PlayerShip : MonoBehaviour
             Debug.Log("Shoot beam!");
 
             GameObject beam = Instantiate(beamRef);
+            beam.GetComponent<BeamScript>().source = this.gameObject;
             beam.transform.position = transform.position + transform.forward;
             beam.transform.forward = transform.forward; // Make beam point to where player is looking.
 

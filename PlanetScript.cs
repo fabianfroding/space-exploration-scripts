@@ -2,5 +2,5 @@
 
 public class PlanetScript : MonoBehaviour
 {
-    public bool discovered = false; // Need to save this in PlayerPrefs.
+    public bool discovered = false; // This is saved in PlayerPrefs.
 }

@@ -3,18 +3,15 @@ using UnityEngine.UI;
 
 public class PlayerScanner : MonoBehaviour
 {
+    public Text planetsDiscoveredText;
+
     [SerializeField]
     private Text scanTextPlanet;
 
     [SerializeField]
     private Text scanTextDistance;
 
-    [SerializeField]
-    private Text planetsDiscoveredText;
-
     private float range = 2000f;
-
-    private int numPlanets = 8;
 
     private void Start()
     {
@@ -23,7 +20,9 @@ public class PlayerScanner : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, range))
+        // Planets LayerMask is used to prevent objects in front of planets from interfering with the raycast,
+        // such as bullets, environments etc.
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, range, 1 << LayerMask.NameToLayer("Planets")))
         {
             if (hit.transform != null)
             {
@@ -32,16 +31,15 @@ public class PlayerScanner : MonoBehaviour
                     float dist = Vector3.Distance(hit.transform.position, transform.position);
                     bool planetDiscovered = hit.transform.gameObject.GetComponent<PlanetScript>().discovered;
 
-                    // TODO: Consider planet scale/sphere radius
                     if (dist < hit.transform.localScale.x + 25)
                     {
                         scanTextDistance.text = "Distance: -";
-                        if (!planetDiscovered)
+                        /*if (!planetDiscovered)
                         {
                             hit.transform.gameObject.GetComponent<PlanetScript>().discovered = true;
                             PlayerPrefs.SetInt("PlanetsDiscovered", PlayerPrefs.GetInt("PlanetsDiscovered") + 1);
                             planetsDiscoveredText.text = "Planets Discovered: " + PlayerPrefs.GetInt("PlanetsDiscovered").ToString() + "/" + numPlanets;
-                        }
+                        }*/
                     }
                     else
                     {

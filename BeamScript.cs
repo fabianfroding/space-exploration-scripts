@@ -2,6 +2,8 @@
 
 public class BeamScript : MonoBehaviour
 {
+    public GameObject source;
+
     private float speed = 30f;
 
     void Start()
@@ -9,17 +11,18 @@ public class BeamScript : MonoBehaviour
         Invoke("DestroySelf", 2f);
     }
 
+    public void DestroySelf()
+    {
+        Destroy(this.gameObject);
+    }
+
     void Update()
     {
         transform.position += transform.forward * speed * Time.deltaTime;
-
-        // TODO: Check collision
-        // If planet tower, destroy self and tower.
-        // If collide with harmful or planet, destroy self.
     }
 
-    private void DestroySelf()
+    private void OnCollisionEnter(Collision collision)
     {
-        Destroy(this.gameObject);
+        DestroySelf();
     }
 }
