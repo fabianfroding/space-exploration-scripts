@@ -4,6 +4,9 @@ public class BeamScript : MonoBehaviour
 {
     public GameObject source;
 
+    [SerializeField]
+    private AudioSource deathSound;
+
     private float speed = 30f;
 
     void Start()
@@ -23,6 +26,16 @@ public class BeamScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        DestroySelf();
+        if (!collision.gameObject.CompareTag("Beam") && !collision.gameObject.CompareTag("Player"))
+        {
+            CancelInvoke("DestroySelf");
+            // Play death sound
+            deathSound.Play();
+
+            GetComponent<SphereCollider>().enabled = false;
+            GetComponent<MeshRenderer>().enabled = false;
+
+            Invoke("DestroySelf", 1.3f);
+        }
     }
 }

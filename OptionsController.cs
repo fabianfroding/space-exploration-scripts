@@ -42,6 +42,6 @@ public class OptionsController : MonoBehaviour
 
     public void SetDifficulty(string difficulty)
     {
-        PlayerPrefs.SetString("Difficulty", difficultyDropdown.options[difficultyDropdown.value].text);
+        PlayerPrefs.SetString("Difficulty", difficulty);
     }
 }
