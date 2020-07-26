@@ -44,6 +44,11 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKey("space"))
             {
+                Vector3 vel = GetComponent<Rigidbody>().velocity;
+                if (vel.x > 0 || vel.y > 0 || vel.z > 0)
+                {
+                    GetComponent<Rigidbody>().velocity = Vector3.zero;
+                }
                 transform.Translate(Vector3.forward * speed * boostSpeed * Time.deltaTime);
             }
         }

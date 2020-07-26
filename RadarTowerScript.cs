@@ -1,8 +1,42 @@
 ﻿using UnityEngine;
 
 public class RadarTowerScript : MonoBehaviour
-{   
+{
+    [SerializeField]
+    private GameObject sun;
+
+    private LineRenderer lineRenderer;
+
     private int numPlanets = 8;
+
+    private void Start()
+    {
+        lineRenderer = GetComponent<LineRenderer>();
+    }
+
+    private void Update()
+    {
+        if (transform.parent.gameObject.GetComponent<PlanetScript>().discovered)
+        {
+            lineRenderer.SetPosition(0, transform.position);
+
+            Vector3 fromPosition = transform.position;
+            Vector3 toPosition = sun.transform.position;
+            Vector3 direction = toPosition - fromPosition;
+
+            if (Physics.Raycast(transform.position, direction, out RaycastHit hit))
+            {
+                if (hit.collider)
+                {
+                    lineRenderer.SetPosition(1, hit.point);
+                }
+            }
+            else
+            {
+                lineRenderer.SetPosition(1, toPosition);
+            }
+        }
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
