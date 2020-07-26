@@ -26,8 +26,8 @@ public class PlayerShip : MonoBehaviour
     private bool boost = false;
     private bool beamOnCD = false;
 
-    private Vector3 respawnPos = new Vector3(235, 14, -750);
-    private Vector3 respawnRot = new Vector3(5, -17.5f, 0);
+    private Vector3 respawnPos = new Vector3(5, 14.3f, -750);
+    private Vector3 respawnRot = new Vector3(0, 0, 0);
 
 
     public void DestroySelf()
