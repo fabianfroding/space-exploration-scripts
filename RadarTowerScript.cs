@@ -5,6 +5,9 @@ public class RadarTowerScript : MonoBehaviour
     [SerializeField]
     private GameObject sun;
 
+    [SerializeField]
+    private GameObject rayPoint;
+
     private LineRenderer lineRenderer;
 
     private int numPlanets = 8;
@@ -18,17 +21,22 @@ public class RadarTowerScript : MonoBehaviour
     {
         if (transform.parent.gameObject.GetComponent<PlanetScript>().discovered)
         {
-            lineRenderer.SetPosition(0, transform.position);
+            lineRenderer.SetPosition(0, rayPoint.transform.position);
 
-            Vector3 fromPosition = transform.position;
+            Vector3 fromPosition = rayPoint.transform.position;
             Vector3 toPosition = sun.transform.position;
             Vector3 direction = toPosition - fromPosition;
 
-            if (Physics.Raycast(transform.position, direction, out RaycastHit hit))
+            if (Physics.Raycast(rayPoint.transform.position, direction, out RaycastHit hit))
             {
                 if (hit.collider)
                 {
                     lineRenderer.SetPosition(1, hit.point);
+                    if (hit.collider.gameObject.CompareTag("Player") &&
+                        !hit.collider.gameObject.GetComponent<PlayerShip>().IsDead())
+                    {
+                        hit.collider.gameObject.GetComponent<PlayerShip>().DestroySelf();
+                    }
                 }
             }
             else

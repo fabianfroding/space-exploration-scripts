@@ -119,7 +119,7 @@ public class PlayerShip : MonoBehaviour
         beamOnCD = false;
     }
 
-    private bool IsDead()
+    public bool IsDead()
     {
         return !GetComponent<MeshRenderer>().enabled;
     }
