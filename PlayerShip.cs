@@ -64,7 +64,11 @@ public class PlayerShip : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.Space) && !IsDead())
+        if (!IsDead() &&
+            Input.GetKey(KeyCode.Space) ||
+            (Input.GetMouseButton(1) && (Input.GetAxisRaw("Horizontal")!= 0 || Input.GetAxisRaw("Vertical") != 0))
+
+            )
         {
             if (!engineSound.isPlaying)
             {
