@@ -97,7 +97,6 @@ public class PlayerShip : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !IsDead() && !beamOnCD)
         {
             beamOnCD = true;
-            Debug.Log("Shoot beam!");
 
             GameObject beam = Instantiate(beamRef);
             beam.GetComponent<BeamScript>().source = this.gameObject;
