@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ChazosScript : PlanetScript
+public class MinesScript : MonoBehaviour
 {
     [SerializeField]
     private GameObject mineRef;
@@ -12,11 +12,13 @@ public class ChazosScript : PlanetScript
     {
         if (PlayerPrefs.GetString("Difficulty") == "Normal")
         {
-            numMines += 500;
+            numMines = 1800;
+            spawnDistance = 65f;
         }
         else if (PlayerPrefs.GetString("Difficulty") == "Hard")
         {
-            numMines += 1000;
+            numMines = 2400;
+            spawnDistance = 70f;
         }
 
         for (int i = 0; i < numMines; i++)
