@@ -11,14 +11,24 @@ public class PlayerScanner : MonoBehaviour
     [SerializeField]
     private Text scanTextDistance;
 
+    [SerializeField]
+    private Text victoryText;
+
+    [SerializeField]
+    private AudioSource logOpenSound;
+
+    [SerializeField]
+    private AudioSource logCloseSound;
+
     private float range = 2000f;
 
     private void Start()
     {
         planetsDiscoveredText.text = "Planets Discovered: " + PlayerPrefs.GetInt("PlanetsDiscovered").ToString();
+        victoryText.enabled = false;
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         // Planets LayerMask is used to prevent objects in front of planets from interfering with the raycast,
         // such as bullets, environments etc.
@@ -34,12 +44,6 @@ public class PlayerScanner : MonoBehaviour
                     if (dist < hit.transform.localScale.x + 25)
                     {
                         scanTextDistance.text = "Distance: -";
-                        /*if (!planetDiscovered)
-                        {
-                            hit.transform.gameObject.GetComponent<PlanetScript>().discovered = true;
-                            PlayerPrefs.SetInt("PlanetsDiscovered", PlayerPrefs.GetInt("PlanetsDiscovered") + 1);
-                            planetsDiscoveredText.text = "Planets Discovered: " + PlayerPrefs.GetInt("PlanetsDiscovered").ToString() + "/" + numPlanets;
-                        }*/
                     }
                     else
                     {
@@ -72,5 +76,23 @@ public class PlayerScanner : MonoBehaviour
             scanTextPlanet.text = "";
             scanTextDistance.text = "";
         }
+    }
+
+    public void ShowVictoryText()
+    {
+        Invoke("UpdateVictoryText", 1.2f);
+    }
+
+    private void UpdateVictoryText()
+    {
+        victoryText.enabled = true;
+        logOpenSound.Play();
+        Invoke("ResetVictoryText", 5f);
+    }
+
+    private void ResetVictoryText()
+    {
+        logCloseSound.Play();
+        victoryText.enabled = false;
     }
 }

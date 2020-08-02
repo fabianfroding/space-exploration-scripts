@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class RadarTowerScript : MonoBehaviour
 {
@@ -7,6 +8,9 @@ public class RadarTowerScript : MonoBehaviour
 
     [SerializeField]
     private GameObject rayPoint;
+
+    [SerializeField]
+    private AudioSource discoverPlanetSound;
 
     private LineRenderer lineRenderer;
 
@@ -56,9 +60,19 @@ public class RadarTowerScript : MonoBehaviour
 
             PlayerPrefs.SetInt("PlanetsDiscovered", planetsDiscovered);
 
-            collision.gameObject.GetComponent<BeamScript>().
-                source.gameObject.GetComponent<PlayerScanner>().planetsDiscoveredText.text
+            GameObject source = collision.gameObject.GetComponent<BeamScript>().source;
+
+            source.gameObject.GetComponent<PlayerScanner>().planetsDiscoveredText.text
                 = "Planets Discovered: " + planetsDiscovered.ToString() + "/" + numPlanets;
+
+            discoverPlanetSound.Play();
+
+            if (PlayerPrefs.GetInt("PlanetsDiscovered") >= 8)
+            {
+                source.gameObject.GetComponent<PlayerScanner>().ShowVictoryText();
+            }
         }
     }
+
+    
 }
