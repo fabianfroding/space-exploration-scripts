@@ -8,7 +8,7 @@ public class EruptScript : MonoBehaviour
     [SerializeField]
     private AudioSource eruptSound;
 
-    private float eruptCooldown = 17.5f;
+    private float eruptCooldown = 12.5f;
     private int numProjectiles = 100;
     private float spawnDistance = 30f;
 
@@ -16,12 +16,12 @@ public class EruptScript : MonoBehaviour
     {
         if (PlayerPrefs.GetString("Difficulty") == "Normal")
         {
-            eruptCooldown = 15;
+            eruptCooldown = 10;
             numProjectiles = 175;
         }
         else if (PlayerPrefs.GetString("Difficulty") == "Hard")
         {
-            eruptCooldown = 12.5f;
+            eruptCooldown = 7.5f;
             numProjectiles = 250;
         }
 
