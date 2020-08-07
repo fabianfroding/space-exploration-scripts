@@ -3,6 +3,9 @@
 public class EruptScript : MonoBehaviour
 {
     [SerializeField]
+    private GameObject player;
+
+    [SerializeField]
     private GameObject eruptProjectile;
 
     [SerializeField]
@@ -30,19 +33,24 @@ public class EruptScript : MonoBehaviour
 
     private void Erupt()
     {
-        eruptSound.Play();
-
-        for (int i = 0; i < numProjectiles; i++)
+        if (Vector3.Distance(player.transform.position, transform.position) < 300)
         {
-            Vector3 position = new Vector3(
-                Random.Range(-spawnDistance, spawnDistance), 
-                Random.Range(-spawnDistance, spawnDistance), 
-                Random.Range(-spawnDistance, spawnDistance)
-                );
+            eruptSound.Play();
 
-            GameObject rock;
-            rock = Instantiate(eruptProjectile, position + this.transform.position, Quaternion.identity) as GameObject;
-            rock.transform.parent = this.gameObject.transform;
+            for (int i = 0; i < numProjectiles; i++)
+            {
+                Vector3 position = new Vector3(
+                    Random.Range(-spawnDistance, spawnDistance),
+                    Random.Range(-spawnDistance, spawnDistance),
+                    Random.Range(-spawnDistance, spawnDistance)
+                    );
+
+                GameObject rock;
+                rock = Instantiate(eruptProjectile, position + this.transform.position, Quaternion.identity) as GameObject;
+                Vector3 randomDirection = new Vector3(Random.value * 360, Random.value * 360, Random.value * 360);
+                rock.transform.Rotate(randomDirection);
+                rock.transform.parent = this.gameObject.transform;
+            }
         }
 
         Invoke("Erupt", eruptCooldown);

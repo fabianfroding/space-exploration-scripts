@@ -26,25 +26,28 @@ public class PlayerShip : MonoBehaviour
     private bool boost = false;
     private bool beamOnCD = false;
 
-    private Vector3 respawnPos = new Vector3(5, 14.3f, -750);
-    private Vector3 respawnRot = new Vector3(0, 0, 0);
+    private Vector3 respawnPos = new Vector3(5, 335.8f, -734.5929f);
+    private Vector3 respawnRot = new Vector3(18.859f, 0, 0);
 
 
     public void DestroySelf()
     {
-        // Disable player
-        GetComponent<MeshRenderer>().enabled = false; // TODO: NOT WORKING
-        GetComponent<PlayerController>().enabled = false;
-        trailRenderer.enabled = false;
-        crossHairCanvas.enabled = false;
+        if (!IsDead())
+        {
+            // Disable player
+            GetComponent<MeshRenderer>().enabled = false; // TODO: NOT WORKING
+            GetComponent<PlayerController>().enabled = false;
+            trailRenderer.enabled = false;
+            crossHairCanvas.enabled = false;
 
 
-        // Play explosion SFX
-        GameObject tmp = Instantiate(playerExplosion, transform.position, transform.rotation);
-        Destroy(tmp, 2);
+            // Play explosion SFX
+            GameObject tmp = Instantiate(playerExplosion, transform.position, transform.rotation);
+            Destroy(tmp, 2);
 
-        // Call respawn
-        Invoke("Respawn", 3.5f);
+            // Call respawn
+            Invoke("Respawn", 3.5f);
+        }
     }
 
     private void Respawn()
@@ -124,6 +127,14 @@ public class PlayerShip : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Harmful") && !IsDead())
+        {
+            DestroySelf();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Harmful") && !IsDead())
         {
