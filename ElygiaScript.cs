@@ -28,7 +28,7 @@ public class ElygiaScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Vector3.Distance(player.transform.position, source.transform.position) < 300 && !missileOnCD)
+        if (Vector3.Distance(player.transform.position, source.transform.position) < 280 && !missileOnCD)
         {
             missileOnCD = true;
 
